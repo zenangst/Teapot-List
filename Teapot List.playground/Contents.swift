@@ -198,10 +198,20 @@ extension ListLayout {
 
 // MARK: - Custom NSCollectionViewItem
 
+class TextField: NSTextField {
+  func preferredLayoutAttributesFitting(_ layoutAttributes: NSCollectionViewLayoutAttributes) -> NSCollectionViewLayoutAttributes {
+    let width = layoutAttributes.size.width / 2
+    preferredMaxLayoutWidth = width
+    layoutAttributes.size = intrinsicContentSize
+    print("🧡: This method should be invoked but isn't.")
+    return layoutAttributes
+  }
+}
+
 /// A simple NSCollectionViewItem displaying a single text field with multiple lines of text.
 class TextFieldItem: NSCollectionViewItem {
     override func loadView() {
-        view =  NSTextField(frame: NSRect(x: 0, y: 0, width: 100, height: 50))
+        view =  TextField(frame: NSRect(x: 0, y: 0, width: 100, height: 50))
         textField = view as? NSTextField
         textField!.maximumNumberOfLines = 0
         textField!.lineBreakMode = .byWordWrapping
